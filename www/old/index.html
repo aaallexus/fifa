@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FIFA</title>
+	<script src="js/jquery-1.11.0.min.js"></script>
+	<style type="text/css">
+		input {
+			border:1px solid #acacac;
+			width:500px;
+			height:30px;
+		}
+		.search-select{
+			border:1px solid #acacac;
+			width:500px;
+			max-height: 400px;
+			overflow: auto;
+		}
+		.search-select ul{
+			margin:0;
+			padding:0;
+			list-style: none;
+		}
+		.search-select li{
+			border-bottom: 1px solid #acacac;
+		}
+		.search-select li a{
+			color:#000;
+			text-decoration: none;
+		}
+	</style>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#search').on('input',function(){
+				if(this.value.length>3)
+				{
+					var out=$('#searchSelect ul');
+					out.empty();
+					$.ajax({
+						'url':'search.php',
+						dataType: 'json',
+						type:'POST',
+						data:{'name':this.value},
+						success:function(param){
+							if(param.length===0)
+								$('#searchSelect').hide();
+							else
+								$('#searchSelect').show();
+							$.each(param,function(){
+								out.append('<li><a href="player?id='+this.id+'"><img src="'+this.foto+'">'+this.name+'</a></li>');
+							});
+						}
+					});
+				}
+				else
+				{
+					$('#searchSelect').hide();
+				}
+			});
+		});
+	</script>
+</head>
+<body>
+	<div>
+		<input id='search' type=text>
+		<div id='searchSelect' class='search-select' style='display:none'>
+			<ul>
+			</ul>
+		</div>
+	</div>
+
+	<div id='out'></div>
+</body>
+</html>
