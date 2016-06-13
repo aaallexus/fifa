@@ -47,17 +47,15 @@ function conectToDB()
 }
 function topMenu(){
 ?>
-<nav class='top-menu'>
     <ul>
 <?php
     $quer= DB()->query('select * from topmenu order by pos');
     while ($query = $quer->fetch())
     {
-        echo "<li>".$query['title']."</li>";
+        echo "<li><a href=''>".$query['title']."</a></li>";
     }
 ?>
     </ul>
-</nav>
 <?php
 }
 conectToDB();
