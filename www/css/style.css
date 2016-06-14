@@ -5,10 +5,7 @@ body {
 header {
   width: 100%;
   height: 400px;
-  overflow: hidden; }
-  header img {
-    width: 100%;
-    background: url("../img/header.jpg"); }
+  background: url("../img/header.jpg"); }
 
 footer {
   background: #333;
@@ -44,6 +41,9 @@ footer {
   color: black; }
   .dropdown .row {
     margin: 10px 0; }
+
+.dropdown-menu {
+  font-size: 12px; }
 
 .login-form {
   padding: 10px; }

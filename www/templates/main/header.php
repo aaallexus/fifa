@@ -23,10 +23,10 @@
 							<div class="tab-content">
 								<div class="tab-pane active" id="auth-tab">
 									<div class="row">
-										<input class='form-control'>
+										<input class='form-control' placeholder="Логин">
 									</div>
 									<div class="row">
-										<input type='password' class='form-control'>
+										<input type='password' class='form-control' placeholder="Пароль">
 									</div>
 									<div class="row">
 										<div class='col-md-8'>
@@ -50,7 +50,36 @@
 									</div>
 								</div>
 								<div class="tab-pane" id="reg-tab">
-									asdasd
+									<div class="row">
+										<input class='form-control' placeholder="Логин">
+									</div>
+									<div class="row">
+										<input type='password' class='form-control' placeholder="Введите пароль">
+									</div>
+									<div class="row">
+										<input type='password' class='form-control' placeholder="Повторите пароль">
+									</div>
+									<div class="row">
+										<input class='form-control' placeholder="Введите E-mail">
+									</div>
+									<div class="row">
+										<div class='col-md-12'>
+											<input type='checkbox' id="reciveMessage">
+											<label for='reciveMessage'>Я хочу получать уведомления</label>
+										</div>
+									</div>
+									<div class="row">
+										<div class='col-md-12'>
+											<input type='checkbox' id="reciveMessage">
+											<label for='reciveMessage'>Я соглашаюсь с правилами</label>
+										</div>
+									</div>
+									<div class="row">
+										<div class='col-md-12'>
+											<input type='checkbox' id="reciveMessage">
+											<label for='reciveMessage'>Я не робот</label>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -60,5 +89,4 @@
 		</div>
 	</div>
 </div>
-<img src='/img/header.jpg'>
 </header>

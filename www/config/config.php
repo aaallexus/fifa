@@ -6,3 +6,4 @@ $db_connection=array(
 	'user'=>'root',
 	'password' => ''
 );
+$default_fifa_version=2016;
