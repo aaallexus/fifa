@@ -3,9 +3,10 @@ function DB()
 {
 	$connection=getConfig('db_connection');
 	try {
-		$db = new PDO('mysql:host='.$connection['host'].';dbname='.$connection['database'], $connection['user'], $connection['password'], array(
+		/*$db = new PDO('mysql:host='.$connection['host'].';dbname='.$connection['database'], $connection['user'], $connection['password'], array(
 			PDO::ATTR_PERSISTENT => true
-		));
+		));*/
+		$db = new PDO('mysql:host='.$connection['host'].';dbname='.$connection['database'], $connection['user'], $connection['password']);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   		$db->exec("set names utf8");
   		return $db;

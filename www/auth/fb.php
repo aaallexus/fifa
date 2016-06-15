@@ -1,7 +1,8 @@
 <?php
 $client_id='979927728772566';
 $client_secret='25b304a08a805c36edad0be86398070a';
-$redirect_uri='http://fifa-trade.com/auth/fb.php';
+//$redirect_uri='http://fifa-trade.com/auth/fb.php';
+$redirect_uri='http://62.149.25.5:8080/auth/fb.php';
 if(isset($_GET['code']))
 {
 	$params = array(

@@ -1,4 +1,10 @@
 <?php
+	session_start();
+	if(isset($_GET['logout']))
+	{
+		unset($_SESSION['user_id']);
+		header("Location: .");
+	}
 	require_once 'functions.php';
 	addScript(array(
 		'libs/jquery/2.2.4/jquery.min.js',

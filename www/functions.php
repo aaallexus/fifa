@@ -58,5 +58,14 @@ function topMenu(){
     </ul>
 <?php
 }
+function showTemplate($url){
+    require_once 'routers.php';
+    if(isset($routers[$url]))
+    {
+        include 'templates/'.$routers[$url].'.php';
+        if(is_file('controllers/'.$routers[$url].'.php'))
+            require_once 'controllers/'.$routers[$url].'.php';
+    }
+}
 conectToDB();
 ?>
