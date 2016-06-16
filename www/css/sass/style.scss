@@ -2,6 +2,7 @@ $blackColor: #333;
 body{
 	margin:0;
 	font-family: "Open Sans", Arial;
+	background:#eceff4;
 }
 header{
 	width:100%;
@@ -12,8 +13,15 @@ footer{
 	background: $blackColor;
 	min-height: 30px;
 	position: absolute;
-	bottom: 0;
+	/*bottom: 0;*/
 	width: 100%;
+}
+.container{
+	background: #fff;
+	padding: 10px 10px 50px;
+}
+.breadcrumbs{
+	height:20px;
 }
 .top-menu{
 	background-color:$blackColor;
@@ -89,6 +97,19 @@ footer{
 	border-radius: 50%;
 	margin:3px 10px;
 }
-.user-photo{
-	width:200px;
+.cabinet{
+	.user-photo{
+		width:200px;
+	}
+	.title{
+		border-bottom: 3px solid #ddd;
+    	display: inline-block;
+    	font-weight: 600;
+    	margin-bottom: 5px;
+	}
+	.social-icon{
+		height:30px;
+		float:left;
+		margin:5px;
+	}
 }

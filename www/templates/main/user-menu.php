@@ -8,7 +8,7 @@
         </a>
         <div class="dropdown-menu pull-right login-form">
         	<ul class='user-menu'>
-        		<li><a href="/cabinet">Личный кабинет</a></li>
+        		<li><a href="/id<?php echo $_SESSION['user_id'];?>">Личный кабинет</a></li>
         		<li>Сообщения</li>
         		<li>Мои игроки</li>
         		<li class='divider'></li>

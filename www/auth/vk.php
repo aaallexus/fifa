@@ -2,8 +2,8 @@
 require_once "../functions.php";
 $client_id='5497420';
 $client_secret='sHJ7zU48ujTwAeypCBva';
-//$redirect_uri='http://fifa-trade.com/auth/vk.php';
-$redirect_uri='http://62.149.25.5:8080/auth/vk.php';
+$redirect_uri='http://fifa-trade.com/auth/vk.php';
+//$redirect_uri='http://62.149.25.5:8080/auth/vk.php';
 $DB=DB();
 
 function getCountries(){
@@ -123,7 +123,7 @@ if(isset($_GET['code']))
                 '',
                 '',
                 '',
-                '',
+                'https://vk.com/id'.$curUser['uid'],
                 '',
                 '',
                 '',

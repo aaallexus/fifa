@@ -25,8 +25,7 @@
 <?php
 	include 'templates/main/header.php';
 	include 'templates/main/body.php';
-	include 'templates/main/footer.php';
-
+	//include 'templates/main/footer.php';
 ?>
 <?php
 	loadScripts();
