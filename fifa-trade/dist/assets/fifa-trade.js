@@ -776,7 +776,7 @@ catch(err) {
 /* jshint ignore:start */
 
 if (!runningTests) {
-  require("fifa-trade/app")["default"].create({"name":"fifa-trade","version":"0.0.0+6e450c88"});
+  require("fifa-trade/app")["default"].create({"name":"fifa-trade","version":"0.0.0+7b60a302"});
 }
 
 /* jshint ignore:end */
