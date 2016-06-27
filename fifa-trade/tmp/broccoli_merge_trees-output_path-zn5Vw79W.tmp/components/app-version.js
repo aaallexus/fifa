@@ -1,0 +1,1 @@
+/var/www/ts-projects/fifa-trade/fifa-trade/tmp/broccoli_merge_trees-input_base_path-XElXZhQU.tmp/5/components/app-version.js

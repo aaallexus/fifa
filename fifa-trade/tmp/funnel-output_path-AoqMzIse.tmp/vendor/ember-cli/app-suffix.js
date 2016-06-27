@@ -1,0 +1,1 @@
+/var/www/ts-projects/fifa-trade/fifa-trade/tmp/funnel-input_base_path-bAUSXJDj.tmp/0//app-suffix.js

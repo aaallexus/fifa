@@ -1,0 +1,1 @@
+define("fifa-trade/routes/index/load", ["exports"], function (exports) {});

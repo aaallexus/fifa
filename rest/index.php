@@ -2,7 +2,7 @@
 header('Connection: Keep-Alive');
 header('Content-Type: application/json; charset=UTF-8');
 header('access-control-allow-origin: *');
-include 'functions.php';
+require_once 'functions.php';
 if(isset($_GET['q']))
 {
 	$params=explode('/',$_GET['q']);
@@ -11,6 +11,24 @@ if(isset($_GET['q']))
 		case 'getMenu':
 			getMenu();
 			break;
+		case 'facebook-auth':
+			facebookAuth();
+			break;
+		case 'getCurUser':
+			getCurUser();
+			break;
+		case 'getUser':
+			getUser();
+			break;
+		case 'logout':
+			logout();
+			break;
+		default:
+			break;
 	}
 }
+else
+{
+}
+
 ?>

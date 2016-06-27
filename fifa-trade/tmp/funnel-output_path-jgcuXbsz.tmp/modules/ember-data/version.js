@@ -1,0 +1,1 @@
+/var/www/ts-projects/fifa-trade/fifa-trade/tmp/creator-output_path-6mIlzmel.tmp/version.js

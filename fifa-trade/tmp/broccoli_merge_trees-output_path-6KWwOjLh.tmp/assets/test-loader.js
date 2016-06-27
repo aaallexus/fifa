@@ -1,0 +1,1 @@
+/var/www/ts-projects/fifa-trade/fifa-trade/bower_components/ember-cli-test-loader/test-loader.js
