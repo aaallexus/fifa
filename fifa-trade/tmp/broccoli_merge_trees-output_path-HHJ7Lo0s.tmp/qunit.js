@@ -1,1 +1,0 @@
-/var/www/ts-projects/fifa-trade/fifa-trade/node_modules/ember-cli-qunit/node_modules/ember-qunit/lib/qunit.js
