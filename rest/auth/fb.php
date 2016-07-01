@@ -4,7 +4,7 @@ $restUrl=getConfig('rest_url');
 $clientUrl=getConfig('client_url');
 $client_id='979927728772566';
 $client_secret='25b304a08a805c36edad0be86398070a';
-$redirect_uri=$restUrl.'auth/fb.php?session_id='.$_GET['session_id'];
+$redirect_uri=$restUrl.'auth/fb?session_id='.$_GET['session_id'];
 //$redirect_uri='http://62.149.25.5:8080/auth/fb.php';
 $DB=DB();
 if(isset($_GET['code']))

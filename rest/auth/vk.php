@@ -4,7 +4,7 @@ $restUrl=getConfig('rest_url');
 $clientUrl=getConfig('client_url');
 $client_id='5497420';
 $client_secret='sHJ7zU48ujTwAeypCBva';
-$redirect_uri=$restUrl.'auth/vk.php?session_id='.$_GET['session_id'];
+$redirect_uri=$restUrl.'auth/vk?session_id='.$_GET['session_id'];
 //$redirect_uri='http://62.149.25.5:8080/auth/vk.php';
 $DB=DB();
 

@@ -19,6 +19,8 @@ export default Ember.Route.extend({
 				var age=curDate.getFullYear() - birthday.getFullYear();
 				age=curDate.setFullYear(1972) < birthday.setFullYear(1972) ? age - 1 : age;
 				data.age=age;
+				if(data.is_friend===0)
+					data.friend_request=true;
 				return data;
 			}
 		});

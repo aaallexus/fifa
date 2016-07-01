@@ -20,9 +20,17 @@ if(isset($_GET['q']))
 		case 'getUser':
 			getUser();
 			break;
+
+
+		case 'addToFriend':
+			addToFriend();
+			break;
+
+			
 		case 'logout':
 			logout();
 			break;
+
 		default:
 			break;
 	}

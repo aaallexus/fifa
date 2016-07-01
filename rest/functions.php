@@ -86,6 +86,8 @@ function mysqlToJson($quer,$isArray=true){
         foreach ($query as $key => $value) {
             if(!is_numeric($value) || strpos($value,'+')!==false)
                 $value='"'.$value.'"';
+            if($value=='""')
+                $value='null';
             $element[]='"'.$key.'":'.str_replace("\n","\\n",$value);
         }
         $array[]='{'.implode(',', $element).'}';
@@ -110,10 +112,41 @@ function getCurUser(){
     }
 }
 function getUser(){
-    if(isset($_SESSION['user_id']))
+    echo mysqlPatternToJson('select users.id,users.login,users.name,users.surname,users.photo_big photo,users.birthday,users.date_reg,users.last_visit,city.name city,country.name country,club.name club ,friends.status is_friend from users left join city on users.city_id=city.id  left join country on users.country_id=country.id left join club on users.favorite_club=club.id left join friends on ((friends.id1=:id and friends.id2=:id_user) or (friends.id2=:id and friends.id1=:id_user)) where users.id=:id limit 1',array('id'=>$_POST['id'],'id_user'=>$_SESSION["user_id"]),false);
+}
+function addToFriend(){
+    if(isset($_POST['id']) && isset($_SESSION['user_id']) && $_POST['id']!=$_SESSION['user_id'])
     {
-        echo mysqlPatternToJson('select users.id,users.login,users.name,users.surname,users.photo_big photo,users.birthday,users.date_reg,users.last_visit,city.name city,country.name country,club.name club from users left join city on users.city_id=city.id  left join country on users.country_id=country.id left join club on users.favorite_club=club.id where users.id=? limit 1',array($_POST['id']),false);
+        $quer = DB()->prepare("select id1 from friends where (id1=:id1 or id2=:id1) and (id2=:id2 or id1=:id2) limit 1");
+        $quer->execute(array(
+            "id1"=>$_POST['id'],
+            "id2"=>$_SESSION['user_id']
+        ));
+        if($quer->fetch(PDO::FETCH_ASSOC))
+        {
+            echo '{"result":"Error"}';
+        }
+        else
+        {
+            $quer = DB()->prepare("insert into friends values(?,?,0)");
+            $quer->execute(array(
+                $_POST['id'],
+                $_SESSION['user_id']
+            ));
+            if($quer->rowCount()==1)
+            {
+                echo '{"result":"Ok1"}';
+            }
+        }
     }
+    else
+    {
+        errorCode(2);
+    }
+}
+function errorCode($code='1')
+{
+    echo '{"result":"Error","code":"'.$code.'"}';
 }
 function logout(){
     unset($_SESSION['user_id']);

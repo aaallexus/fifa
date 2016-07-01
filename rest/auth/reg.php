@@ -1,6 +1,9 @@
 <?php
+header('Connection: Keep-Alive');
+header('Content-Type: application/json; charset=UTF-8');
+header('access-control-allow-origin: *');
 require_once "../functions.php";
-if(isset($_POST['login']) && isset($_POST['password']) && isset($_POST['repeat_password']) && isset($_POST['email']) && $_POST['login']!=='' && $_POST['password']!=='' && $_POST['email']!=='' && $_POST['password']===$_POST['repeat_password'])
+if(isset($_POST['login']) && isset($_POST['password']) && isset($_POST['email']) && $_POST['login']!=='' && $_POST['password']!=='' && $_POST['email']!=='')
 {
 	$DB=DB();
 	$quer = $DB->prepare('SELECT id FROM users WHERE login = ? and type_record=3');
@@ -25,15 +28,14 @@ if(isset($_POST['login']) && isset($_POST['password']) && isset($_POST['repeat_p
 	    $quer = $DB->prepare('insert into users values(null,3,0,?,?,"","","","","","","0000-00-00",?,?,?,"",?,"","","","","","",0,0,0,0,0,0,?)');
 	    $quer->execute($params);
 	    $userId=$DB->lastInsertId('users');
-	    session_start();
         $_SESSION['type_auth']='3';
         $_SESSION['user_id']=$userId;
         $_SESSION['user_photo']='';
+        getCurUser();
 	}
-    ?>
-<script language='javascript'>
-    window.location='/';
-</script>
-    <?php
+	else
+	{
+		echo '{"result":false}';
+	}
 }
 ?>

@@ -24,7 +24,6 @@ export default Ember.Route.extend({
 							},
 							success:function(data){
 								self.controllerFor('index').set('curUser',data);
-								
 							},
 							error:function(){
 								

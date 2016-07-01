@@ -2,64 +2,39 @@
 	<div class='col-md-3'>
 		<div class='row'>
 			<img class='user-photo' src="{{model.photo}}">
-			<button id='sendMessage'>Написать сообщение</button>
-			<button id='addFriend'>Добавить в друзья</button>
+			{{#if curUser.id}}
+				<button id='sendMessage' >Написать сообщение</button>
+				{{#if model.is_friend}}
+					<br>Ваш друг
+				{{else}}
+					{{#if model.friend_request}}
+						<br>Заявка в друзья
+					{{else}}
+						<button id='addFriend' {{action 'addToFriend'}}>Добавить в друзья</button>
+					{{/if}}
+				{{/if}}
+			{{/if}}
 		</div>
 	</div>
 	<div class='col-md-9'>
 		<ul class="nav nav-tabs">
-	        <li class="active"><a href="#main-tab" data-toggle="tab" aria-expanded="true">Общие</a></li>
-	        <li class=""><a href="#dealings-tab" data-toggle="tab" aria-expanded="false">Сделки</a></li>
-	        <li class=""><a href="#players-tab" data-toggle="tab" aria-expanded="false">Игроки</a></li>
-	        <li class=""><a href="#friends-tab" data-toggle="tab" aria-expanded="false">Друзья</a></li>
-	        <li class=""><a href="#settings-tab" data-toggle="tab" aria-expanded="false">Настройки</a></li>
+	        <li id='main-tab'>{{#link-to "index.user.main" model.id}}Общие{{/link-to}}</li>
+	        <li class="" id="dealings-tab">{{#link-to "index.user.friends" model.id}}Сделки{{/link-to}}</li>
+	        <li id="players-tab">{{#link-to "index"}}
+			Игроки{{/link-to}}</li>
+	        <li class="" id="friends-tab">{{#link-to "index.user.friends" model.id}}
+			Друзья{{/link-to}}</li>
+	        <li id="settings-tab">{{#link-to "index.user.friends" model.id}}Настройки{{/link-to}}</li>
 	    </ul>
+	    {{outlet}}
 		<div class="tab-content">
-        	<div class="tab-pane active" id="main-tab">
-        		<div class='row'>
-					<div>Мои данные</div>
-					<table class='table table-striped'>
-						<tbody>
-							<tr><td>Логин</td><td id='userLogin'>{{model.login}}</td></tr>
-							<tr><td>Имя</td><td id='userName'>{{model.name}}</td></tr>
-							<tr><td>Фамилия</td><td id='userSurname'>{{model.surname}}</td></tr>
-							<tr><td>Страна</td><td id='userCountry'>{{model.country}}</td></tr>
-							<tr><td>Город</td><td id='userCity'>{{model.city}}</td></tr>
-							<tr><td>Дата рождения</td><td id='userBirthday'>{{model.birthday}}({{model.age}})</td></tr>
-							<tr><td>Регистрация</td><td>{{model.date_reg}}</td></tr>
-							<tr><td>Последнее посещение</td><td>{{model.last_visit}}</td></tr>
-							<tr><td>Любимый клуб</td><td id='userClub'>{{model.club}}</td></tr>
-						</tbody>
-					</table>
-				</div>
-				<div class='row'>
-					<div class='col-md-6'>
-						<div class='row'>
-							<h5 class='title'>Для связи со мной</h5>
-						</div>
-						<div class='row' id='userSkype'></div>
-						<div class='row' id='userEmail'></div>
-						<div class='row' id='userPhone'></div>
-						<div class='row' id='userIcq'></div>
-					</div>
-					<div class='col-md-6'>
-						<div class='row'>
-							<h5 class='title'>Я в социальных сетях</h5>
-						</div>
-						
-					</div>
-				</div>
-			</div>
-			<div class="tab-pane" id="dealings-tab">
+			<div class="tab-pane">
 
 			</div>
-			<div class="tab-pane" id="players-tab">
+			<div class="tab-pane">
 
 			</div>
-			<div class="tab-pane" id="friends-tab">
-
-			</div>
-			<div class="tab-pane" id="settings-tab">
+			<div class="tab-pane">
 
 			</div>
 		</div>
