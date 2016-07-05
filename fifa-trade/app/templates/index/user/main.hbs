@@ -1,0 +1,39 @@
+<div class="tab-pane active" id="main-tab">
+	<div class='row'>
+		<div>Мои данные</div>
+		<table class='table table-striped'>
+			<tbody>
+				{{#if isWaiter}}
+					<tr><td colspan=2>Wait....</td></tr>
+				{{else}}
+					<tr><td>Логин</td><td id='userLogin'>{{model.login}}</td></tr>
+					<tr><td>Имя</td><td id='userName'>{{model.name}}</td></tr>
+					<tr><td>Фамилия</td><td id='userSurname'>{{model.surname}}</td></tr>
+					<tr><td>Страна</td><td id='userCountry'>{{model.country}}</td></tr>
+					<tr><td>Город</td><td id='userCity'>{{model.city}}</td></tr>
+					<tr><td>Дата рождения</td><td id='userBirthday'>{{model.birthday}}({{model.age}})</td></tr>
+					<tr><td>Регистрация</td><td>{{model.date_reg}}</td></tr>
+					<tr><td>Последнее посещение</td><td>{{model.last_visit}}</td></tr>
+					<tr><td>Любимый клуб</td><td id='userClub'>{{model.club}}</td></tr>
+				{{/if}}
+			</tbody>
+		</table>
+	</div>
+	<div class='row'>
+		<div class='col-md-6'>
+			<div class='row'>
+				<h5 class='title'>Для связи со мной</h5>
+			</div>
+			<div class='row' id='userSkype'></div>
+			<div class='row' id='userEmail'></div>
+			<div class='row' id='userPhone'></div>
+			<div class='row' id='userIcq'></div>
+		</div>
+		<div class='col-md-6'>
+			<div class='row'>
+				<h5 class='title'>Я в социальных сетях</h5>
+			</div>
+			
+		</div>
+	</div>
+</div>

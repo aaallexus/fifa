@@ -2,16 +2,20 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 	model:function(arg){
-		this.controllerFor('index.user').set('userId',arg.id);
-		/*var restUrl=this.controllerFor('index').get('restUrl');
+		var self=this;
+		var restUrl=this.controllerFor('index').get('restUrl');
 		var sessionId=this.controllerFor('index').get('sessionId');
-		return $.ajax({
+		var userId=this.controllerFor('index.user').get('userId');
+		this.controllerFor('index.user.main').set('isWaiter',true);
+		$('ul.nav-tabs li').removeClass('active');
+		$("#main-tab").addClass('active');
+		$.ajax({
 			'url':restUrl+'getUser',
 			'type':'POST',
 			'dataType':'json',
 			'data':{
 				'session_id':sessionId,
-				'id':arg.id
+				'id':userId
 			},
 			success:function(data){
 				var curDate=new Date();
@@ -22,8 +26,14 @@ export default Ember.Route.extend({
 				data.age=age;
 				if(data.is_friend===0)
 					data.friend_request=true;
-				return data;
+				self.controllerFor('index.user.main').set('isWaiter',false);
+				self.controllerFor('index.user.main').set('model',data);
 			}
-		});*/
+		});
+	},
+	model2:function(){
+		$('ul.nav-tabs li').removeClass('active');
+		$("#main-tab").addClass('active');
+
 	}
 });

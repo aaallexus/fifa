@@ -6,6 +6,7 @@ require_once 'functions.php';
 if(isset($_GET['q']))
 {
 	$params=explode('/',$_GET['q']);
+	//sleep(1);
 	switch($params[1])
 	{
 		case 'getMenu':
@@ -29,6 +30,9 @@ if(isset($_GET['q']))
 			
 		case 'logout':
 			logout();
+			break;
+		case 'getFriends':
+			getFriends();
 			break;
 
 		default:
