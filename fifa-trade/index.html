@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Fifa-trade</title>
+    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/select2.css" rel="stylesheet">
+
+    <link href="css/style.css" rel="stylesheet">
+
+    <script src="lib/jquery-1.11.1.js"></script>
+    <script src="lib/handlebars.min.js"></script>
+    <script src="lib/ember.prod-v1.7.0.js"></script>
+    <script src="lib/bootstrap.js"></script>
+    <script src="lib/select2.js"></script>
+
+    <script src="js/app.js"></script>
+    <script src="js/app/router.js"></script>
+
+    <script src="js/app/routes/index.js"></script>
+    <script src="js/app/controllers/index.js"></script>
+    <script src="js/app/controllers/login.js"></script>
+
+
+
+</head>
+<body>
+<script type="text/x-handlebars" data-template-name="login">
+<div class="container" style="height: 100%; padding: 0; position: absolute;width: 100%; background:url('img/left-side-bg.jpg') repeat scroll 0 0">
+    <div class="login-plain">
+        <div class="login-form">
+            <div class="modal-header">
+                <div class="login-logo">
+                    <img height="83" src="img/authPageLogo2.png" alt="logo name">
+                </div>
+            </div>
+            <div class="modal-center">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            {{input class="form-control not-null" enter="login" type="text" placeholder="login" value=userLogin maxlength=50}}
+                            <i class="fa fa-user right gray"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-12">
+                            {{input class="form-control" enter="login" type="password" placeholder="password" value=userPassword maxlength=255}}
+                            <i class="fa fa-lock gray"></i>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <div class="col-lg-12 form-actions change-password">
+                        <div class="navi-btn navi-btn-icon" style="position:relative; top:7px;">
+                            <a {{action "login"}}>
+                                <i class="fa fa-sign-in blue-bg"></i><span class="navi-btn-text">Login</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+<script type="text/x-handlebars" data-template-name="index">
+<header class="header">
+        <div class="container clr">
+            <!-- logo =============================== -->
+            <div class="logo left"><a href="#"><img alt="" src="img/logo.png"></a></div>
+            <!-- end logo  -->
+
+            <!-- Nav =============================== -->
+            <ul class="nav left">
+                {{#each menuItem in leftMenu}}
+                    <li><a href='#' {{action 'goTo' menuItem.url}}>{{menuItem.title}}</a></li>
+                {{/each}}                              
+            </ul>
+            <!-- end Nav -->
+    
+            <!-- Lang =============================== -->
+            <ul class="nav lang right">
+                <li class="dropdown">
+                    <a data-toggle="dropdown" class="dropdown-toggle lang__link" href="#">Ru <b class="caret"></b></a>
+                    <ul class="dropdown-menu ">
+                        <li><a href="#">English</a></li>
+                        <li><a href="#">Россия</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- end Lang -->
+            
+            <!-- Profile =============================== -->
+            {{#if curUser.id}}
+                <div class="m-profile right">
+                    <div class="m-profile__avatar inline">
+                        <img alt="" src="{{curUser.photo_small}}">
+                        <span class="kbd">3</span>
+                    </div>
+                    
+                    <ul class="nav inline">
+                        <li class="dropdown">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">{{curUser.name}} <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" {{action 'goToCabinet' curUser.id}}><i class="ic ic--settings"></i> Личный кабинет</a></li>
+                                <li><a href="#"><i class="ic ic--message"></i> Сообщения <span class="kbd">3</span></a></li>
+                                <li><a href="#"><i class="ic ic--group"></i> Мои игроки</a></li>
+                                <li><a href="#" {{action 'logout'}}><i class="ic ic--out"></i> Выход</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <span class="shield">9</span>
+                </div>
+            {{else}}
+                <div class="m-profile right">
+                    <a class="dropdown-toggle account" href="#" {{action 'showMenu'}}>
+                                Войти в систему
+                    </a>
+                    <div class="dropdown-menu pull-right login-form" id='rightMenu'>
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#auth-tab" data-toggle="tab" aria-expanded="true">Авторизация</a></li>
+                            <li class=""><a href="#reg-tab" data-toggle="tab" aria-expanded="false">Регистрация</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="auth-tab">
+                                <form onsubmit="return false;">
+                                    <div class="row">
+                                        <input class='form-control' name='login' placeholder="Логин">
+                                    </div>
+                                    <div class="row">
+                                        <input type='password' name='password' class='form-control' placeholder="Пароль">
+                                    </div>
+                                    <div class="row">
+                                        <div class='col-md-8'>
+                                            <input type='checkbox' id='savePassword'>
+                                            <label for='savePassword'>Запомнить</label>
+                                        </div>
+                                        <div class='col-md-4'>
+                                            <button class='btn btn-success' {{action 'auth' 'site'}}>Войти</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="row">
+                                    <div class='auth-divider'>
+                                        <span>
+                                            или
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <a href="#" {{action 'auth' 'facebook'}}>Facebook</a>
+                                    <a href="#" {{action 'auth' 'vk'}}>VKontakte</a>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="reg-tab">
+                                <div class="row">
+                                    <input class='form-control' type='text' name='login' placeholder="Логин">
+                                </div>
+                                <div class="row">
+                                    <input type='password' class='form-control' name='password' placeholder="Введите пароль">
+                                </div>
+                                <div class="row">
+                                    <input type='password' class='form-control' name='repeat_password' placeholder="Повторите пароль">
+                                </div>
+                                <div class="row">
+                                    <input class='form-control' type='text' name='email' placeholder="Введите E-mail">
+                                </div>
+                                <div class="row">
+                                    <div class='col-md-12'>
+                                        <input type='checkbox' id="reciveMessage">
+                                        <label for='reciveMessage'>Я хочу получать уведомления</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class='col-md-12'>
+                                        <input type='checkbox' id="reciveMessage">
+                                        <label for='reciveMessage'>Я соглашаюсь с правилами</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class='col-md-12'>
+                                        <input type='checkbox' id="reciveMessage">
+                                        <label for='reciveMessage'>Я не робот</label>
+                                    </div>
+                                </div>
+                                <div class='col-md-4'>
+                                    <button class='btn btn-success' {{action 'auth' 'reg'}}>Зарегистрироваться</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+            <!-- end Profile -->
+
+        </div>
+    </header>
+<section class="home">
+        <div class="container">
+            <div class="home__info">
+                <div class="logo">
+                    <img alt="" src="img/home-logo.png">
+                </div>
+                <p class="description">This resource for gamers of FIFA, it isn’t commertial website, all right was protected. <br>
+                Thank you that use our website</p>
+            </div>
+        </div>
+
+        <!-- Search  =============================== -->
+        <div class="search">
+            <div class="container">
+                <form class="search__form clr" action="#">
+                    <!-- filter  =============================== -->
+                    <div class="js-filter modal-dropdown">
+                        <button data-toggle="dropdown" class="btn btn--info dropdown-toggle" aria-expanded="true"><i class="ic ic--filter"></i> фильтры <b class="caret"></b></button>
+
+                        <div class="modal-bl dropdown-menu">
+                            <header class="modal-bl-header">
+                                <i class="ic ic--filter"></i> фильтры
+                                <button class="btn btn--close js-modal-bl-hide">&nbsp;</button>
+                            </header>
+                            <div class="modal-bl-content">
+                                <div class="modal-bl-body">
+                                    <div class="col-xs-4">
+                                        <h5 class="title-line"><span>Общие</span></h5>
+                                        <div class="row">
+                                            <div class="col-xs-5">
+                                                <label>Продавец</label>
+                                                <label>Тип карточки</label>
+                                                <label>Рейтинг</label>
+                                                <label>Цена <small>(min)</small></label>
+                                                <label>Цена <small>(max)</small></label>
+                                            </div>
+                                            <div class="col-xs-7">
+                                                <select class="input-bl">
+                                                    <option value="Все">Все</option>
+                                                    <option value="Все">Все</option>
+                                                </select>
+                                                <select class="input-bl">
+                                                    <option value="TOTY">TOTY</option>
+                                                    <option value="TOTY">TOTY</option>
+                                                </select>
+                                                <div class="fl-grid fl-grid--doubble">
+                                                    <input type="text" class="input-sm input-grid col-5" value="1"> 
+                                                    <input type="text" class="input-sm col-5 col-offset-2" value="99"> 
+                                                </div>
+                                                
+                                                <div class="fl-grid fl-grid--strech">
+                                                    <input type="text" class="input-sm col-7" value="0">
+                                                    <select class="col-5">
+                                                        <option value="m">m</option>
+                                                        <option value="m">m</option>
+                                                    </select>
+                                                </div>  
+
+                                                <div class="fl-grid fl-grid--strech">
+                                                    <input type="text" class="input-sm col-7" value="999">
+                                                    <select class="col-5">
+                                                        <option value="m">m</option>
+                                                        <option value="m">m</option>
+                                                    </select>
+                                                </div>  
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <h5 class="title-line"><span>Персональные</span></h5>
+                                        <div class="row">
+                                            <div class="col-xs-5">
+                                                <label>Национальность</label>
+                                                <label>Лига</label>
+                                                <label>Клуб</label>
+                                                <label>Позиция</label>
+                                            </div>
+                                            <div class="col-xs-7">
+                                                <div class="select2-container input-bl" id="s2id_autogen9"><a tabindex="-1" class="select2-choice" href="javascript:void(0)">   <span class="select2-chosen" id="select2-chosen-10">Все</span><abbr class="select2-search-choice-close"></abbr>   <span role="presentation" class="select2-arrow"><b role="presentation"></b></span></a><label class="select2-offscreen" for="s2id_autogen10"></label><input type="text" role="button" aria-haspopup="true" class="select2-focusser select2-offscreen" aria-labelledby="select2-chosen-10" id="s2id_autogen10"><div class="select2-drop select2-display-none select2-with-searchbox">   <div class="select2-search">       <label class="select2-offscreen" for="s2id_autogen10_search"></label>       <input type="text" aria-autocomplete="list" aria-expanded="true" role="combobox" class="select2-input" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off" aria-owns="select2-results-10" id="s2id_autogen10_search" placeholder="">   </div>   <ul role="listbox" class="select2-results" id="select2-results-10">   </ul></div></div><select class="input-bl" tabindex="-1" title="" style="display: none;">
+                                                    <option value="Все">Все</option>
+                                                    <option value="Все">Все</option>
+                                                </select>
+                                                <div class="select2-container input-bl" id="s2id_autogen11"><a tabindex="-1" class="select2-choice" href="javascript:void(0)">   <span class="select2-chosen" id="select2-chosen-12">Все</span><abbr class="select2-search-choice-close"></abbr>   <span role="presentation" class="select2-arrow"><b role="presentation"></b></span></a><label class="select2-offscreen" for="s2id_autogen12"></label><input type="text" role="button" aria-haspopup="true" class="select2-focusser select2-offscreen" aria-labelledby="select2-chosen-12" id="s2id_autogen12"><div class="select2-drop select2-display-none select2-with-searchbox">   <div class="select2-search">       <label class="select2-offscreen" for="s2id_autogen12_search"></label>       <input type="text" aria-autocomplete="list" aria-expanded="true" role="combobox" class="select2-input" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off" aria-owns="select2-results-12" id="s2id_autogen12_search" placeholder="">   </div>   <ul role="listbox" class="select2-results" id="select2-results-12">   </ul></div></div><select class="input-bl" tabindex="-1" title="" style="display: none;">
+                                                    <option value="Все">Все</option>
+                                                    <option value="Все">Все</option>
+                                                </select>
+                                                <div class="select2-container input-bl" id="s2id_autogen13"><a tabindex="-1" class="select2-choice" href="javascript:void(0)">   <span class="select2-chosen" id="select2-chosen-14">Все</span><abbr class="select2-search-choice-close"></abbr>   <span role="presentation" class="select2-arrow"><b role="presentation"></b></span></a><label class="select2-offscreen" for="s2id_autogen14"></label><input type="text" role="button" aria-haspopup="true" class="select2-focusser select2-offscreen" aria-labelledby="select2-chosen-14" id="s2id_autogen14"><div class="select2-drop select2-display-none select2-with-searchbox">   <div class="select2-search">       <label class="select2-offscreen" for="s2id_autogen14_search"></label>       <input type="text" aria-autocomplete="list" aria-expanded="true" role="combobox" class="select2-input" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off" aria-owns="select2-results-14" id="s2id_autogen14_search" placeholder="">   </div>   <ul role="listbox" class="select2-results" id="select2-results-14">   </ul></div></div><select class="input-bl" tabindex="-1" title="" style="display: none;">
+                                                    <option value="Все">Все</option>
+                                                    <option value="Все">Все</option>
+                                                </select>
+                                                <div class="select2-container input-bl" id="s2id_autogen15"><a tabindex="-1" class="select2-choice" href="javascript:void(0)">   <span class="select2-chosen" id="select2-chosen-16">Все</span><abbr class="select2-search-choice-close"></abbr>   <span role="presentation" class="select2-arrow"><b role="presentation"></b></span></a><label class="select2-offscreen" for="s2id_autogen16"></label><input type="text" role="button" aria-haspopup="true" class="select2-focusser select2-offscreen" aria-labelledby="select2-chosen-16" id="s2id_autogen16"><div class="select2-drop select2-display-none select2-with-searchbox">   <div class="select2-search">       <label class="select2-offscreen" for="s2id_autogen16_search"></label>       <input type="text" aria-autocomplete="list" aria-expanded="true" role="combobox" class="select2-input" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off" aria-owns="select2-results-16" id="s2id_autogen16_search" placeholder="">   </div>   <ul role="listbox" class="select2-results" id="select2-results-16">   </ul></div></div><select class="input-bl" tabindex="-1" title="" style="display: none;">
+                                                    <option value="Все">Все</option>
+                                                    <option value="Все">Все</option>
+                                                </select>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <h5 class="title-line"><span>Физические</span></h5>
+
+                                        <div class="row">
+                                            <div class="col-xs-5">
+                                                <label>Скорость</label>
+                                                <label>Удар</label>
+                                                <label>Передача</label>
+                                                <label>Дриблинг</label>
+                                                <label>Защита</label>
+                                            </div>
+                                            <div class="col-xs-7">
+                                                <div class="fl-grid fl-grid--doubble">
+                                                    <input type="text" value="1" class="input-sm input-grid col-5"> 
+                                                    <input type="text" value="99" class="input-sm col-5 col-offset-2"> 
+                                                </div>
+                                                <div class="fl-grid fl-grid--doubble">
+                                                    <input type="text" value="1" class="input-sm input-grid col-5"> 
+                                                    <input type="text" value="99" class="input-sm col-5 col-offset-2"> 
+                                                </div>
+                                                <div class="fl-grid fl-grid--doubble">
+                                                    <input type="text" value="1" class="input-sm input-grid col-5"> 
+                                                    <input type="text" value="99" class="input-sm col-5 col-offset-2"> 
+                                                </div>
+                                                <div class="fl-grid fl-grid--doubble">
+                                                    <input type="text" value="1" class="input-sm input-grid col-5"> 
+                                                    <input type="text" value="99" class="input-sm col-5 col-offset-2"> 
+                                                </div>
+                                                <div class="fl-grid fl-grid--doubble">
+                                                    <input type="text" value="1" class="input-sm input-grid col-5"> 
+                                                    <input type="text" value="99" class="input-sm col-5 col-offset-2"> 
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    
+                                </div>
+                                <footer class="modal-bl-footer text-right">
+                                    <button class="btn btn--transp btn--sm" type="reset">Очистить</button>
+                                    <button class="btn btn--warning btn--sm" type="submit">Поиск</button>
+                                </footer>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end filter  -->
+
+                    <!-- PC  =============================== -->
+                    <div class="js-pc dropdown">
+                        <button data-toggle="dropdown" class="btn dropdown-toggle" aria-expanded="false"><span class="ic-wr"><i class="ic ic--pc"></i></span> <strong>PC</strong> <b class="caret"></b></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><span class="ic-wr"><i class="ic ic--ios"></i></span> <strong>IOS</strong></a></li>
+                            <li><a href="#"><span class="ic-wr"><i class="ic ic--android"></i></span> <strong>Android</strong></a></li>
+                            <li><a href="#"><span class="ic-wr"><i class="ic ic--plastation"></i></span> <strong>PlayStationи</strong></a></li>
+                            <li><a href="#"><span class="ic-wr"><i class="ic ic--xbox"></i></span> <strong>Xbox</strong></a></li>
+                        </ul>
+                    </div>
+                    <!-- end PC  -->
+
+                    <button class="btn btn--warning btn-search" type="submit">&nbsp;</button>
+
+                    <!-- Input search  =============================== -->
+                    <div class="js-input dropdown">
+                        <input type="text" data-toggle="dropdown" class="input-bl dropdown-toggle" placeholder="Поиск игроков..." aria-expanded="false">
+                        <button class="btn--reset" type="reset"></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><img class="dp-img" alt="" src="img/player1.png"> Ronaldo <span>(Real Madrid)</span></a></li>
+                            <li><a href="#"><img class="dp-img" alt="" src="img/player1.png"> Robben <span>(bayern munich)</span></a></li>
+                            <li><a href="#"><img class="dp-img" alt="" src="img/player1.png"> LEWANDOWSKI <span>(Baern Munich)</span></a></li>
+                            <li><a href="#"><img class="dp-img" alt="" src="img/player1.png"> Ronaldo <span>(Real Madrid)</span></a></li>
+                            <li><a href="#"><img class="dp-img" alt="" src="img/player1.png"> Robben <span>(bayern munich)</span></a></li>
+                            <li><a href="#"><img class="dp-img" alt="" src="img/player1.png"> LEWANDOWSKI <span>(Baern Munich)</span></a></li>
+                        </ul>
+                    </div>
+                    <!-- end Input search  -->
+
+                </form>
+            </div>
+        </div>
+        <!-- end Search  -->
+    </section>
+<div class="breadcrumbs">
+</div>
+<div class="container">
+    {{outlet}}
+</div>
+</script>
+
+</body>
+</html>
