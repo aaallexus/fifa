@@ -12,7 +12,7 @@
 }
 .select2-container {
     display: inline-block;
-    margin: 0;
+    margin: 0 0 15px;
     padding-left: 0;
     padding-right: 0;
     position: relative;
@@ -25,17 +25,20 @@
     -moz-user-select: none;
     background-clip: padding-box;
     background-color: #fff;
-    border: 1px solid #ccc;
-    color: #555;
+    border: 1px solid #d4d4d4;
+    color: #333;
+    font-size: 13px;
+    font-weight: 400;
     display: block;
-    height: 30px;
-    line-height: 30px;
+    height: 27px;
+    line-height: 25px;
     overflow: hidden;
-    padding: 0 0 0 8px;
+    padding: 0 0 0 10px;
     position: relative;
     text-decoration: none;
     white-space: nowrap;
 }
+
 .select2-container.select2-drop-above .select2-choice {
     border-bottom-color: #aaa;
 }
@@ -44,7 +47,7 @@
 }
 .select2-container .select2-choice > .select2-chosen {
     display: block;
-    margin-right: 26px;
+    margin-right: 44px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -109,7 +112,7 @@
     position: absolute;
     top: 100%;
     width: 100%;
-    z-index: 10002;
+    z-index: 9999;
 }
 .select2-drop-auto-width {
     border-top: 1px solid #aaa;
@@ -139,7 +142,7 @@
     border-top: 1px solid #67919d;
 }
 .select2-container .select2-choice .select2-arrow {
-    background: none repeat scroll 0 0 #fff;
+    background: none repeat scroll 0 0 #eeecec; 
     border-left: 1px solid #ccc;
     display: inline-block;
     height: 100%;
@@ -147,10 +150,10 @@
     position: absolute;
     right: 0;
     top: 0;
-    width: 18px;
+    width: 25px;
 }
 .select2-container .select2-choice .select2-arrow b {
-    background: url("../img/select2.png") no-repeat scroll 0 1px rgba(0, 0, 0, 0);
+    background: url("../img/select2.png") no-repeat scroll 3px -1px rgba(0, 0, 0, 0);
     display: block;
     height: 100%;
     width: 100%;
@@ -166,6 +169,7 @@
     width: 100%;
     z-index: 10000;
 }
+.select2-hidden-accessible {display: none;}
 .select2-search input {
     background: url("../img/select2.png") no-repeat scroll 100% -22px #fff;
     border: 1px solid #aaa;
@@ -210,12 +214,12 @@
     border-width: 1px;
 }
 .select2-dropdown-open .select2-choice .select2-arrow {
-    background: none repeat scroll 0 0 transparent;
+    background: none repeat scroll 0 0;
     border-left: medium none;
     filter: none;
 }
 .select2-dropdown-open .select2-choice .select2-arrow b {
-    background-position: -18px 1px;
+    background-position: -14px -1px;
 }
 .select2-results {
     margin: 4px 4px 4px 0;

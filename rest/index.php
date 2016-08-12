@@ -5,39 +5,37 @@ header('access-control-allow-origin: *');
 require_once 'functions.php';
 if(isset($_GET['q']))
 {
+	$actions=array(
+		'getMenu',
+		'getCurUser',
+		'getUser',
+		'getNationsList',
+		'getLeagueList',
+		'getClubList',
+		'getUserList',
+		'addToFriend',
+		'logout',
+		'getFriends',
+		'getPositionList',
+		'search',
+		'findPlayers',
+		'getPlayers',
+		'getPlayer',
+		'addPlayer',
+		'deletePlayer',
+		'changeLogin',
+		'getMessages',
+		'getMessageUsers',
+		'sendMessageToUser',
+		'getCountUnreadMessages'
+	);
 	$params=explode('/',$_GET['q']);
-	//sleep(1);
-	switch($params[1])
+	if(in_array($params[1],$actions))
 	{
-		case 'getMenu':
-			getMenu();
-			break;
-		case 'facebook-auth':
-			facebookAuth();
-			break;
-		case 'getCurUser':
-			getCurUser();
-			break;
-		case 'getUser':
-			getUser();
-			break;
-
-
-		case 'addToFriend':
-			addToFriend();
-			break;
-
-			
-		case 'logout':
-			logout();
-			break;
-		case 'getFriends':
-			getFriends();
-			break;
-
-		default:
-			break;
+		if(function_exists($params[1]))
+			$params[1]();
 	}
+	//sleep(1);
 }
 else
 {

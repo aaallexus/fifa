@@ -1,5 +1,7 @@
 App.IndexController = Ember.Controller.extend({
 	isLoad:false,
+    defaultSearchValues:{"nation_id":0, "league_id":0, "club_id":0,"user_id":0,"position_id":"Все","min_rait":1,"max_rait":99,"min_speed":1,"max_speed":99,"min_shotpower":1,"max_shotpower":99,"min_pass":1,"max_pass":99,"min_dribling":1,"max_dribling":99,"min_defense":1,"max_defense":99,"min_price":null,"max_price":null,"min_price_modificator":1000,"max_price_modificator":1000},
+    priceModificatorArray:[{'value':1000, "caption":'k'},{'value':1000000,'caption':'m'}],
     facebookAuth:function(){
         window.location=restUrl+'auth/fb?session_id='+this.get('sessionId');
     },
@@ -19,6 +21,18 @@ App.IndexController = Ember.Controller.extend({
             },
             success:function(data){
                 self.set('curUser',data);
+                self.controllerFor('user').set('curUser',data);
+                $.ajax({
+                    'url':restUrl+'getCountUnreadMessages',
+                    'type':'POST',
+                    'dataType':'json',
+                    'data':{
+                        'session_id':self.get('sessionId')
+                    },
+                    success:function(data){
+                        self.set('countUnreadMessages',data.count);
+                    }
+                });
             }
         });
         return false;
@@ -39,6 +53,7 @@ App.IndexController = Ember.Controller.extend({
                 },
                 success:function(data){
                     self.set('curUser',data);
+                    self.controllerFor('user').set('curUser',data);
                 }
             });
         }
@@ -72,11 +87,11 @@ App.IndexController = Ember.Controller.extend({
     },
     showMenu: function(){
         var  menu=$('#rightMenu');
-        	menu.show();
-        	$('<div  class="dialog-background"></div>').insertBefore(menu).click(function(){
-			menu.hide();
-			$(this).remove();
-		});
+        menu.show();
+        $('<div class="dialog-background"></div>').insertBefore(menu).click(function(){
+            menu.hide();
+            $(this).remove();
+        });
 		menu.show();
     },
     goTo:function(router){
@@ -99,8 +114,51 @@ App.IndexController = Ember.Controller.extend({
                 break;
         }
     },
+    checkLogin: function(){
+        var curUser=this.get('curUser');
+
+        if(curUser && curUser.login==null)
+        {
+            $('#modalChangeLogin').addClass('in show');
+            this.transitionToRoute('index');
+        }
+    },
+    saveLogin:function(){
+        var self=this;
+        $.ajax({
+            'url':restUrl+'changeLogin',
+                'type':'POST',
+                'dataType':'json',
+                'data':{
+                    'login':this.get('newLogin'),
+                    'session_id':this.get('sessionId')
+                },
+                success:function(data){
+                    if(data.result=='ok')
+                    {
+                        var curUser=$.extend({},self.get('curUser'));
+                        curUser.login=self.get('newLogin');
+                        self.set('curUser',curUser);
+                        $('#modalChangeLogin').removeClass('in show');
+                    }
+                }
+        });
+    },
     goToCabinet: function(id_user){
         this.transitionToRoute('index.user',id_user);
+    },
+    search:function(){
+        this.controllerFor('players').search();
+    },
+    clearSearch:function(){
+        var select=$('.dropdown-menu .modal-bl-body select');
+        this.controllerFor('index').set('model',this.get('defaultSearchValues'));
+        select.select2('destroy');
+        this.search();
+        setTimeout(function(){
+            select.select2();
+        },100);
+
     },
     logout: function(){
         var self=this;
@@ -114,9 +172,30 @@ App.IndexController = Ember.Controller.extend({
             success:function(data){
                 //self.transitionToRoute('index');
                 self.set('curUser',{});
-                self.get('curUser');
+                self.controllerFor('user').set('curUser',{});
+                //self.get('curUser');
                 //location.reload();       
             }
         });
+    },
+    sendMessageToUser:function(){
+        $.ajax({
+            'url':restUrl+'sendMessageToUser',
+            'type':'POST',
+            'dataType':'json',
+            'data':{
+                'session_id':this.get('sessionId'),
+                'user_id':$('#message-window').attr('data-user-id'),
+                'message':$('#message-window #message').val()
+            },
+            success:function(data){
+
+            }
+        });
+        $('.message-window').hide();
+        $('#message-window #message').val('');
+    },
+    closeModalWindow:function(){
+        $('.message-window').hide();
     }
 });
